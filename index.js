@@ -1,14 +1,17 @@
-const a = document.getElementById("test-id");
-a.addEventListener("click", () => {
-  console.log("CLICKED");
-});
-
-
 const audioCtx = new AudioContext();
 const analyser = audioCtx.createAnalyser();
 
 const audio = document.querySelector("audio");
-audio.addEventListener('play', draw);
+const cat = document.getElementById('catgif');
+audio.addEventListener('play', () => {
+  cat.style.display = 'block';
+  audioCtx.resume();
+  draw();
+});
+
+audio.addEventListener('pause', () => {
+  cat.style.display = 'none';
+});
 
 const source = audioCtx.createMediaElementSource(audio);
 source.connect(analyser);
@@ -21,7 +24,6 @@ analyser.getByteTimeDomainData(dataArray);
 analyser.connect(audioCtx.destination);
 const canvas = document.querySelector("canvas");
 const canvasCtx = canvas.getContext("2d");
-// https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Visualizations_with_Web_Audio_API 
 
 const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
@@ -36,8 +38,6 @@ function draw() {
   canvasCtx.fillRect(0, 0 , WIDTH, HEIGHT);
 
   analyser.getByteFrequencyData(dataArray);
-
-  console.log("debug ", dataArray[0], Math.floor(dataArray[0]/32));
 
   for (let i = 0; i < bufferLength; i++) {
     for (let j = 0; j < Math.floor(dataArray[i]/16); j++) {
