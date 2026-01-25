@@ -9,3 +9,29 @@ body {
 #catgif { 
   display: none;
 }
+
+#message { 
+  display: block;
+  font-size: 25px;
+  background: linear-gradient(
+                90deg,
+              rgb(0, 0, 255),
+              rgb(0, 255, 0),
+              rgb(255, 0, 0)
+              ) 0 0 / 400% 100%;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: move-bg 2s infinite linear;
+  text-align: center;
+}
+
+#messageContainer { 
+  background-color: rgba(0, 0, 0, 85%);
+}
+
+@keyframes move-bg {
+  to {
+    background-position: 400% 0;
+  }
+}
